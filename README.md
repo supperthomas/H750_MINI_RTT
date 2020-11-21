@@ -140,7 +140,7 @@ startup_stm32h750xx.s这个文件中外设中断向量表占了很多codesize，
 
 ### SystemInit
 
-这个函数中，一些多余的代码可以优化掉，优化后的代码如下:
+这个函数中，一些多余的代码可以优化掉，优化后的代码如下，这个差不多可以优化0.04KB代码:
 
 ```
 void SystemInit (void)
@@ -242,10 +242,6 @@ void SysTick_Handler(void)
 Program Size: Code=10394 RO-data=1450 RW-data=72 ZI-data=1944  
 ```
 
-
-
-
-
 ## 裁剪三（合并工程）
 
 这个时候我们就需要整合一个工程，这个时候，我的思路是：
@@ -254,6 +250,12 @@ Program Size: Code=10394 RO-data=1450 RW-data=72 ZI-data=1944
 - 然后使用keil中的代码来替换
 
 这边我就不详细展开了，
+
+###  system_init
+
+我们先把之前提到的[SystemInit](#SystemInit) 先把除了RTOS以外的外围代码优化一下
+
+这边优化的文件有startup_stm32h750xx.S 和system_stm32h7xx.c。感兴趣的可以自行比较一下。
 
 整合之后，我们看到我们的代码大小：
 
@@ -443,13 +445,97 @@ rt_application_init这个函数从0x0800012c地址开始，大小是0x3c
 
 就这样一点一点的扣代码。
 
-### softtimer 裁剪
 
-由于softtimer我们没有用到，timer.c里面的函数基本用不到，我们可以删掉
+
+
+
+### timer 裁剪
+
+由于timer我们没有用到，timer.c里面的函数基本用不到，我们可以全部注释掉，相关调用也注释掉。整个TIMER差不多占了0.6KB左右。
+
+![image-20201121233656406](images/image-20201121233656406.png)
 
 ### rt_memset和rt_memcpy 可以优化掉
 
-在kservice.c中
+在kservice.c中，整个文件都可以注释掉，把相关的调用也注释掉。整个差不多占用0.08KB
+
+![image-20201121234048844](images/image-20201121234048844.png)
+
+
+
+### rt_thread_exit
+
+我们追求极致的话，线程退出，其实也是不做要求的，thread.c中。这里差不多是0.08KB左右的代码
+
+![image-20201121235140905](images/image-20201121235140905.png)
+
+
+
+### idle task
+
+idle task 中有一些操作，可以将代码注释掉在idle.c
+
+这边尝试了一下，只保留一个while循环，小灯也可以闪烁。这部分代码差不多是0.15KB左右
+
+![image-20201121235449931](images/image-20201121235449931.png)
+
+### hardfault的处理
+
+hardfault这边也占了一些codesize，可以优化掉，hardfault的实现实在contex_gcc.S中，由于gcc未将.s文件优化掉（就是不用的汇编没法优化掉，只能一点点的删减）这个差不多节省0.08KB
+
+- startup_stm32h750xx.s中也要将hardfault处理函数去掉。
+
+![image-20201121235951005](images/image-20201121235951005.png)
+
+### rt_critical
+
+临界区，由于没有进程间竞争，进入临界区可以优化掉，scheduler.c
+
+rt_enter_critical 和rt_exit_critical
+
+差不多可以节省0.09KB
+
+![image-20201122000203685](images/image-20201122000203685.png)
+
+### rt_components_init
+
+对于components一些选项，也是可以优化掉的。
+
+这个差不多可以节省0.04KB
+
+![image-20201122000743670](images/image-20201122000743670.png)
+
+### rt_hw_interrupt_enable
+
+这边我们线程比较少，对于开关总中断可以优化掉。在thread.c中
+
+这个差不多可以节省0.2KB
+
+![image-20201122001141333](images/image-20201122001141333.png)
+
+### rt_interrupt_enter 
+
+中断比较少，rt_interrupt_enter这个进中断和出中断可以裁剪掉，差不多是0.4KB。
+
+![image-20201122001650368](images/image-20201122001650368.png)
+
+还有这个函数rt_hw_interrupt_thread_switch
+
+### rt_components_board_init
+
+这个函数可以去掉，大约省0.03KB
+
+![image-20201122002646364](images/image-20201122002646364.png)
+
+
+
+### rt_ipc_list_suspend
+
+这个函数中 case RT_IPC_FLAG_PRIO:这个部分是不需要的，我们直接注释掉会节省0.05KB
+
+![image-20201122002944950](images/image-20201122002944950.png)
+
+
 
 ### inline函数优化
 
@@ -457,77 +543,42 @@ inline函数在编译的时候，是将代码整个放到函数中的，如果�
 
 rt_service.h
 
-### rt_hw_interrupt_enable
+这边我以为会把inline函数改成函数，使得代码有所减少，后来复盘的时候，发现，实际上代码量是增加的
 
-这边我们线程比较少，对于开关总中断可以优化掉。在thread.c中
+增加了0.07KB。这充分说明了，inline函数写的好，实际上是会减少codesize的。
 
-### rt_thread_exit
-
-我们追求极致的话，线程退出，其实也是不做要求的。
-
-### idle task
-
-idle task 中有一些操作，可以将代码注释掉在idle.c
-
-### hardfault的处理
-
-hardfault这边也占了一些codesize，可以优化掉
-
-### rt_exit_critical
-
-临界区，由于没有进程间竞争，可以优化掉，scheduler.c
-
-### 
+![image-20201122003529930](images/image-20201122003529930.png)
 
 
 
+### rt_thread
+
+rt_thread这个结构体struct rt_thread 里面有一些东西可以优化掉。减少codesize
+
+`struct rt_timer thread_timer;   ` 这个成员相关的代码可以删掉
+
+![image-20201122004321975](images/image-20201122004321975.png)
+
+基本差不多了。
 
 
 
+基本删减代码就用时间来堆积了，没啥太大要讲的内容了。其实主要觉得比较有意思一点。主要也是想把我自己知道的经验传递给大家，让大家对内核结构有个更好的认识
+
+最后工程05_final_cut_mini_system
 
 
 
-### rt_object_container
+剩下的我觉得还有以下一些优化空间，如果大家已经做了，可以PR到我的仓库来，我们一起来实现最最小的RTTHREAD操作系统。
 
-这个数组相对来说比较大，有一个RT_Object_Info_Unknown的我们没有用到，可以优化掉
-
-RT_Object_Class_Timer，数组中的这个元素也是可以优化掉的，因为我们没有使用timer
-
-
-
-### rt_components_init
-
-对于components一些选项，也是可以优化掉的。
-
-
-
-
-
-这边我列举我根据map文件来裁剪的内容：
-
-- 系统softtimer部分是不需要的
-- 系统hardfault中断是不需要处理的，相关代码都可以去掉
-- rt_memcpy，rt_memset  这些函数用的不多，尝试把调用的地方删掉，可以节省空间
-- 线程不会退出，所以rt_thread_exit  这个函数可以去掉
-- 目前采用的都是系统中断的内核中断，未用到外部中断，可以将中断向量表优化掉
-- idle task尝试将里面的内容清理掉，只留一个while循环，可以让系统继续亮灯
-- system_stm32h7xx.c里面的一些=0的代码多余，可以去掉一些，然后尝试亮灯
-- timer.c里面大部分代码是可以不需要考虑的，（因为我们没有用到定时器）
-- rt_components_board_init这个没啥大作用，因为我们没有加载组件，可以去掉
-- 因为我们中断线程切换不多，可以考虑rt_hw_interrupt_thread_switch 等汇编代码去掉
-- inline函数在编译的时候，会导致代码有可能有所增加，不过这个裁剪不是很明显，如果inline函数比较大的时候，裁剪会比较明显，所以rtthread中有很多地方使用了inline函数，这边我试过将inline调整为函数来调用，效果不是特别明显。
-
-这边稍微晒下调试的痕迹。
-
-![image-20201111235004662](images/image-20201111235004662.png)
-
-
-
-基本删减代码就用时间来堆积了，没啥太大要讲的内容了。其实主要觉得比较有意思一点。所以会专注搞一搞。可能也因为之前有一些裁剪经验。
+- 用汇编写代码
+- 一些跑不到的if可以删掉
 
 
 
 ## 成果
+
+交稿的那个工程
 
 ![image-20201111233645996](images/image-20201111233645996.png)
 
