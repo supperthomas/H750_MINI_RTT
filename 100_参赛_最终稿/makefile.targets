@@ -1,0 +1,6 @@
+clean2:
+	-$(RM) $(CC_DEPS)$(C++_DEPS)$(C_UPPER_DEPS)$(CXX_DEPS)$(SECONDARY_FLASH)$(SECONDARY_SIZE)$(ASM_DEPS)$(S_UPPER_DEPS)$(C_DEPS)$(CPP_DEPS)
+	-$(RM) $(OBJS) *.elf
+	-@echo ' '
+    
+*.elf: $(wildcard F:/01_Project/33_h7/02_kernel_strip/test/RTTHREAD_STUDIO/H750_LED_SAMPLE/linkscripts/STM32H750VBTx/link.lds)
