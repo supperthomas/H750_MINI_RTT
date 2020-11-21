@@ -374,54 +374,54 @@ void rt_schedule_remove_thread(struct rt_thread *thread)
 /**
  * This function will lock the thread scheduler.
  */
-void rt_enter_critical(void)
-{
-    register rt_base_t level;
-
-    /* disable interrupt */
-    level = rt_hw_interrupt_disable();
-
-    /*
-     * the maximal number of nest is RT_UINT16_MAX, which is big
-     * enough and does not check here
-     */
-    rt_scheduler_lock_nest ++;
-
-    /* enable interrupt */
-    rt_hw_interrupt_enable(level);
-}
-RTM_EXPORT(rt_enter_critical);
-
-/**
- * This function will unlock the thread scheduler.
- */
-void rt_exit_critical(void)
-{
-    register rt_base_t level;
-
-    /* disable interrupt */
-    level = rt_hw_interrupt_disable();
-
-    rt_scheduler_lock_nest --;
-    if (rt_scheduler_lock_nest <= 0)
-    {
-        rt_scheduler_lock_nest = 0;
-        /* enable interrupt */
-        rt_hw_interrupt_enable(level);
-
-        if (rt_current_thread)
-        {
-            /* if scheduler is started, do a schedule */
-            rt_schedule();
-        }
-    }
-    else
-    {
-        /* enable interrupt */
-        rt_hw_interrupt_enable(level);
-    }
-}
-RTM_EXPORT(rt_exit_critical);
+//void rt_enter_critical(void)
+//{
+//    register rt_base_t level;
+//
+//    /* disable interrupt */
+//    level = rt_hw_interrupt_disable();
+//
+//    /*
+//     * the maximal number of nest is RT_UINT16_MAX, which is big
+//     * enough and does not check here
+//     */
+//    rt_scheduler_lock_nest ++;
+//
+//    /* enable interrupt */
+//    rt_hw_interrupt_enable(level);
+//}
+//RTM_EXPORT(rt_enter_critical);
+//
+///**
+// * This function will unlock the thread scheduler.
+// */
+//void rt_exit_critical(void)
+//{
+//    register rt_base_t level;
+//
+//    /* disable interrupt */
+//    level = rt_hw_interrupt_disable();
+//
+//    rt_scheduler_lock_nest --;
+//    if (rt_scheduler_lock_nest <= 0)
+//    {
+//        rt_scheduler_lock_nest = 0;
+//        /* enable interrupt */
+//        rt_hw_interrupt_enable(level);
+//
+//        if (rt_current_thread)
+//        {
+//            /* if scheduler is started, do a schedule */
+//            rt_schedule();
+//        }
+//    }
+//    else
+//    {
+//        /* enable interrupt */
+//        rt_hw_interrupt_enable(level);
+//    }
+//}
+//RTM_EXPORT(rt_exit_critical);
 
 /**
  * Get the scheduler lock level

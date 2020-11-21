@@ -253,7 +253,7 @@ void rt_object_init(struct rt_object         *object,
     /* check object type to avoid re-initialization */
 
     /* enter critical */
-    rt_enter_critical();
+ //   rt_enter_critical();
     /* try to find object */
     for (node  = information->object_list.next;
             node != &(information->object_list);
@@ -265,7 +265,7 @@ void rt_object_init(struct rt_object         *object,
         RT_ASSERT(obj != object);
     }
     /* leave critical */
-    rt_exit_critical();
+  //  rt_exit_critical();
 
     /* initialize object's parameters */
     /* set object type to static */
