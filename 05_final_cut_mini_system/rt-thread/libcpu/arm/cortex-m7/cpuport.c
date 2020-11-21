@@ -367,80 +367,80 @@ struct exception_info
     struct stack_frame stack_frame;
 };
 
-void rt_hw_hard_fault_exception(struct exception_info *exception_info)
-{
-    extern long list_thread(void);
-    struct exception_stack_frame *exception_stack = &exception_info->stack_frame.exception_stack_frame;
-    struct stack_frame *context = &exception_info->stack_frame;
-
-    if (rt_exception_hook != RT_NULL)
-    {
-        rt_err_t result;
-
-        result = rt_exception_hook(exception_stack);
-        if (result == RT_EOK) return;
-    }
-
-    rt_kprintf("psr: 0x%08x\n", context->exception_stack_frame.psr);
-
-    rt_kprintf("r00: 0x%08x\n", context->exception_stack_frame.r0);
-    rt_kprintf("r01: 0x%08x\n", context->exception_stack_frame.r1);
-    rt_kprintf("r02: 0x%08x\n", context->exception_stack_frame.r2);
-    rt_kprintf("r03: 0x%08x\n", context->exception_stack_frame.r3);
-    rt_kprintf("r04: 0x%08x\n", context->r4);
-    rt_kprintf("r05: 0x%08x\n", context->r5);
-    rt_kprintf("r06: 0x%08x\n", context->r6);
-    rt_kprintf("r07: 0x%08x\n", context->r7);
-    rt_kprintf("r08: 0x%08x\n", context->r8);
-    rt_kprintf("r09: 0x%08x\n", context->r9);
-    rt_kprintf("r10: 0x%08x\n", context->r10);
-    rt_kprintf("r11: 0x%08x\n", context->r11);
-    rt_kprintf("r12: 0x%08x\n", context->exception_stack_frame.r12);
-    rt_kprintf(" lr: 0x%08x\n", context->exception_stack_frame.lr);
-    rt_kprintf(" pc: 0x%08x\n", context->exception_stack_frame.pc);
-
-    if (exception_info->exc_return & (1 << 2))
-    {
-        rt_kprintf("hard fault on thread: %s\r\n\r\n", rt_thread_self()->name);
-
-#ifdef RT_USING_FINSH
-        list_thread();
-#endif
-    }
-    else
-    {
-        rt_kprintf("hard fault on handler\r\n\r\n");
-    }
-
-    if ( (exception_info->exc_return & 0x10) == 0)
-    {
-        rt_kprintf("FPU active!\r\n");
-    }
-
-#ifdef RT_USING_FINSH
-    hard_fault_track();
-#endif /* RT_USING_FINSH */
-
-    while (1);
-}
+//void rt_hw_hard_fault_exception(struct exception_info *exception_info)
+//{
+//    extern long list_thread(void);
+//    struct exception_stack_frame *exception_stack = &exception_info->stack_frame.exception_stack_frame;
+//    struct stack_frame *context = &exception_info->stack_frame;
+//
+//    if (rt_exception_hook != RT_NULL)
+//    {
+//        rt_err_t result;
+//
+//        result = rt_exception_hook(exception_stack);
+//        if (result == RT_EOK) return;
+//    }
+//
+//    rt_kprintf("psr: 0x%08x\n", context->exception_stack_frame.psr);
+//
+//    rt_kprintf("r00: 0x%08x\n", context->exception_stack_frame.r0);
+//    rt_kprintf("r01: 0x%08x\n", context->exception_stack_frame.r1);
+//    rt_kprintf("r02: 0x%08x\n", context->exception_stack_frame.r2);
+//    rt_kprintf("r03: 0x%08x\n", context->exception_stack_frame.r3);
+//    rt_kprintf("r04: 0x%08x\n", context->r4);
+//    rt_kprintf("r05: 0x%08x\n", context->r5);
+//    rt_kprintf("r06: 0x%08x\n", context->r6);
+//    rt_kprintf("r07: 0x%08x\n", context->r7);
+//    rt_kprintf("r08: 0x%08x\n", context->r8);
+//    rt_kprintf("r09: 0x%08x\n", context->r9);
+//    rt_kprintf("r10: 0x%08x\n", context->r10);
+//    rt_kprintf("r11: 0x%08x\n", context->r11);
+//    rt_kprintf("r12: 0x%08x\n", context->exception_stack_frame.r12);
+//    rt_kprintf(" lr: 0x%08x\n", context->exception_stack_frame.lr);
+//    rt_kprintf(" pc: 0x%08x\n", context->exception_stack_frame.pc);
+//
+//    if (exception_info->exc_return & (1 << 2))
+//    {
+//        rt_kprintf("hard fault on thread: %s\r\n\r\n", rt_thread_self()->name);
+//
+//#ifdef RT_USING_FINSH
+//        list_thread();
+//#endif
+//    }
+//    else
+//    {
+//        rt_kprintf("hard fault on handler\r\n\r\n");
+//    }
+//
+//    if ( (exception_info->exc_return & 0x10) == 0)
+//    {
+//        rt_kprintf("FPU active!\r\n");
+//    }
+//
+//#ifdef RT_USING_FINSH
+//    hard_fault_track();
+//#endif /* RT_USING_FINSH */
+//
+//    while (1);
+//}
 
 /**
  * shutdown CPU
  */
-void rt_hw_cpu_shutdown(void)
-{
-    rt_kprintf("shutdown...\n");
-
-    RT_ASSERT(0);
-}
-
-/**
- * reset CPU
- */
-RT_WEAK void rt_hw_cpu_reset(void)
-{
-    SCB_AIRCR = SCB_RESET_VALUE;
-}
+//void rt_hw_cpu_shutdown(void)
+//{
+//    rt_kprintf("shutdown...\n");
+//
+//    RT_ASSERT(0);
+//}
+//
+///**
+// * reset CPU
+// */
+//RT_WEAK void rt_hw_cpu_reset(void)
+//{
+//    SCB_AIRCR = SCB_RESET_VALUE;
+//}
 
 #ifdef RT_USING_CPU_FFS
 /**
