@@ -71,7 +71,7 @@ void rt_hw_board_init()
 
     /* Call components board initial (use INIT_BOARD_EXPORT()) */
 #ifdef RT_USING_COMPONENTS_INIT
-    rt_components_board_init();
+   // rt_components_board_init();
 #endif
 
 #if defined(RT_USING_USER_MAIN) && defined(RT_USING_HEAP)

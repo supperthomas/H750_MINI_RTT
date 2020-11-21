@@ -88,33 +88,33 @@ rt_inline rt_err_t rt_ipc_list_suspend(rt_list_t        *list,
         rt_list_insert_before(list, &(thread->tlist));
         break;
 
-    case RT_IPC_FLAG_PRIO:
-        {
-            struct rt_list_node *n;
-            struct rt_thread *sthread;
-
-            /* find a suitable position */
-            for (n = list->next; n != list; n = n->next)
-            {
-                sthread = rt_list_entry(n, struct rt_thread, tlist);
-
-                /* find out */
-                if (thread->current_priority < sthread->current_priority)
-                {
-                    /* insert this thread before the sthread */
-                    rt_list_insert_before(&(sthread->tlist), &(thread->tlist));
-                    break;
-                }
-            }
-
-            /*
-             * not found a suitable position,
-             * append to the end of suspend_thread list
-             */
-            if (n == list)
-                rt_list_insert_before(list, &(thread->tlist));
-        }
-        break;
+//    case RT_IPC_FLAG_PRIO:
+//        {
+//            struct rt_list_node *n;
+//            struct rt_thread *sthread;
+//
+//            /* find a suitable position */
+//            for (n = list->next; n != list; n = n->next)
+//            {
+//                sthread = rt_list_entry(n, struct rt_thread, tlist);
+//
+//                /* find out */
+//                if (thread->current_priority < sthread->current_priority)
+//                {
+//                    /* insert this thread before the sthread */
+//                    rt_list_insert_before(&(sthread->tlist), &(thread->tlist));
+//                    break;
+//                }
+//            }
+//
+//            /*
+//             * not found a suitable position,
+//             * append to the end of suspend_thread list
+//             */
+//            if (n == list)
+//                rt_list_insert_before(list, &(thread->tlist));
+//        }
+//        break;
     }
 
     return RT_EOK;

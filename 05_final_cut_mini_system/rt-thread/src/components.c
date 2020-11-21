@@ -79,26 +79,26 @@ INIT_EXPORT(rti_end, "6.end");
 /**
  * RT-Thread Components Initialization for board
  */
-void rt_components_board_init(void)
-{
-#if RT_DEBUG_INIT
-    int result;
-    const struct rt_init_desc *desc;
-    for (desc = &__rt_init_desc_rti_board_start; desc < &__rt_init_desc_rti_board_end; desc ++)
-    {
-        rt_kprintf("initialize %s", desc->fn_name);
-        result = desc->fn();
-        rt_kprintf(":%d done\n", result);
-    }
-#else
-    const init_fn_t *fn_ptr;
-
-    for (fn_ptr = &__rt_init_rti_board_start; fn_ptr < &__rt_init_rti_board_end; fn_ptr++)
-    {
-        (*fn_ptr)();
-    }
-#endif
-}
+//void rt_components_board_init(void)
+//{
+//#if RT_DEBUG_INIT
+//    int result;
+//    const struct rt_init_desc *desc;
+//    for (desc = &__rt_init_desc_rti_board_start; desc < &__rt_init_desc_rti_board_end; desc ++)
+//    {
+//        rt_kprintf("initialize %s", desc->fn_name);
+//        result = desc->fn();
+//        rt_kprintf(":%d done\n", result);
+//    }
+//#else
+//    const init_fn_t *fn_ptr;
+//
+//    for (fn_ptr = &__rt_init_rti_board_start; fn_ptr < &__rt_init_rti_board_end; fn_ptr++)
+//    {
+//        (*fn_ptr)();
+//    }
+//#endif
+//}
 
 /**
  * RT-Thread Components Initialization
