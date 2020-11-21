@@ -56,7 +56,7 @@ enum rt_object_info_type
 #ifdef RT_USING_MODULE
     RT_Object_Info_Module,                             /**< The object is a module. */
 #endif
-    RT_Object_Info_Unknown,                            /**< The object is unknown. */
+   RT_Object_Info_Unknown,                            /**< The object is unknown. */
 };
 
 #define _OBJ_CONTAINER_LIST_INIT(c)     \
@@ -98,7 +98,7 @@ static struct rt_object_information rt_object_container[RT_Object_Info_Unknown] 
     {RT_Object_Class_Device, _OBJ_CONTAINER_LIST_INIT(RT_Object_Info_Device), sizeof(struct rt_device)},
 #endif
     /* initialize object container - timer */
-    {RT_Object_Class_Timer, _OBJ_CONTAINER_LIST_INIT(RT_Object_Info_Timer), sizeof(struct rt_timer)},
+    //{RT_Object_Class_Timer, _OBJ_CONTAINER_LIST_INIT(RT_Object_Info_Timer), sizeof(struct rt_timer)},
 #ifdef RT_USING_MODULE
     /* initialize object container - module */
     {RT_Object_Class_Module, _OBJ_CONTAINER_LIST_INIT(RT_Object_Info_Module), sizeof(struct rt_dlmodule)},

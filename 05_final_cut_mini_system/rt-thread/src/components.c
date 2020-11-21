@@ -103,28 +103,28 @@ void rt_components_board_init(void)
 /**
  * RT-Thread Components Initialization
  */
-void rt_components_init(void)
-{
-#if RT_DEBUG_INIT
-    int result;
-    const struct rt_init_desc *desc;
-
-    rt_kprintf("do components initialization.\n");
-    for (desc = &__rt_init_desc_rti_board_end; desc < &__rt_init_desc_rti_end; desc ++)
-    {
-        rt_kprintf("initialize %s", desc->fn_name);
-        result = desc->fn();
-        rt_kprintf(":%d done\n", result);
-    }
-#else
-    const init_fn_t *fn_ptr;
-
-    for (fn_ptr = &__rt_init_rti_board_end; fn_ptr < &__rt_init_rti_end; fn_ptr ++)
-    {
-        (*fn_ptr)();
-    }
-#endif
-}
+//void rt_components_init(void)
+//{
+//#if RT_DEBUG_INIT
+//    int result;
+//    const struct rt_init_desc *desc;
+//
+//    rt_kprintf("do components initialization.\n");
+//    for (desc = &__rt_init_desc_rti_board_end; desc < &__rt_init_desc_rti_end; desc ++)
+//    {
+//        rt_kprintf("initialize %s", desc->fn_name);
+//        result = desc->fn();
+//        rt_kprintf(":%d done\n", result);
+//    }
+//#else
+//    const init_fn_t *fn_ptr;
+//
+//    for (fn_ptr = &__rt_init_rti_board_end; fn_ptr < &__rt_init_rti_end; fn_ptr ++)
+//    {
+//        (*fn_ptr)();
+//    }
+//#endif
+//}
 
 #ifdef RT_USING_USER_MAIN
 
@@ -175,7 +175,7 @@ void main_thread_entry(void *parameter)
     extern int $Super$$main(void);
 
     /* RT-Thread components initialization */
-    rt_components_init();
+  //  rt_components_init();
 
     /* invoke system main function */
 #if defined(__CC_ARM) || defined(__CLANG_ARM)
