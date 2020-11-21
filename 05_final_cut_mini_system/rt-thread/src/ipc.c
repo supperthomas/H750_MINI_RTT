@@ -376,17 +376,17 @@ rt_err_t rt_sem_take(rt_sem_t sem, rt_int32_t time)
                                 sem->parent.parent.flag);
 
             /* has waiting time, start thread timer */
-            if (time > 0)
-            {
-                RT_DEBUG_LOG(RT_DEBUG_IPC, ("set thread:%s to timer list\n",
-                                            thread->name));
-
-                /* reset the timeout of thread timer and start it */
-                rt_timer_control(&(thread->thread_timer),
-                                 RT_TIMER_CTRL_SET_TIME,
-                                 &time);
-                rt_timer_start(&(thread->thread_timer));
-            }
+//            if (time > 0)
+//            {
+//                RT_DEBUG_LOG(RT_DEBUG_IPC, ("set thread:%s to timer list\n",
+//                                            thread->name));
+//
+//                /* reset the timeout of thread timer and start it */
+//                rt_timer_control(&(thread->thread_timer),
+//                                 RT_TIMER_CTRL_SET_TIME,
+//                                 &time);
+//                rt_timer_start(&(thread->thread_timer));
+//            }
 
             /* enable interrupt */
             rt_hw_interrupt_enable(temp);

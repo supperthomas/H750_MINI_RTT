@@ -221,7 +221,7 @@ int rtthread_startup(void)
     rt_show_version();
 
     /* timer system initialization */
-    rt_system_timer_init();
+    //rt_system_timer_init();
 
     /* scheduler system initialization */
     rt_system_scheduler_init();
@@ -235,7 +235,7 @@ int rtthread_startup(void)
     rt_application_init();
 
     /* timer thread initialization */
-    rt_system_timer_thread_init();
+  //  rt_system_timer_thread_init();
 
     /* idle thread initialization */
     rt_thread_idle_init();

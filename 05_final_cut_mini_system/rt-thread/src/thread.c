@@ -95,7 +95,7 @@ void rt_thread_exit(void)
     thread->stat = RT_THREAD_CLOSE;
 
     /* remove it from timer list */
-    rt_timer_detach(&thread->thread_timer);
+   // rt_timer_detach(&thread->thread_timer);
 
     if ((rt_object_is_systemobject((rt_object_t)thread) == RT_TRUE) &&
         thread->cleanup == RT_NULL)
@@ -170,12 +170,12 @@ static rt_err_t _rt_thread_init(struct rt_thread *thread,
     thread->user_data = 0;
 
     /* init thread timer */
-    rt_timer_init(&(thread->thread_timer),
-                  thread->name,
-                  rt_thread_timeout,
-                  thread,
-                  0,
-                  RT_TIMER_FLAG_ONE_SHOT);
+//    rt_timer_init(&(thread->thread_timer),
+//                  thread->name,
+//                  rt_thread_timeout,
+//                  thread,
+//                  0,
+//                  RT_TIMER_FLAG_ONE_SHOT);
 
     /* initialize signal */
 #ifdef RT_USING_SIGNALS
@@ -668,7 +668,7 @@ rt_err_t rt_thread_suspend(rt_thread_t thread)
     rt_schedule_remove_thread(thread);
 
     /* stop thread timer anyway */
-    rt_timer_stop(&(thread->thread_timer));
+   // rt_timer_stop(&(thread->thread_timer));
 
     /* enable interrupt */
     rt_hw_interrupt_enable(temp);
@@ -709,7 +709,7 @@ rt_err_t rt_thread_resume(rt_thread_t thread)
     /* remove from suspend list */
     rt_list_remove(&(thread->tlist));
 
-    rt_timer_stop(&thread->thread_timer);
+  //  rt_timer_stop(&thread->thread_timer);
 
     /* enable interrupt */
     rt_hw_interrupt_enable(temp);
