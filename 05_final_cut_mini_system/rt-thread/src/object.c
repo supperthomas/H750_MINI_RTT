@@ -271,7 +271,7 @@ void rt_object_init(struct rt_object         *object,
     /* set object type to static */
     object->type = type | RT_Object_Class_Static;
     /* copy name */
-    rt_strncpy(object->name, name, RT_NAME_MAX);
+    //rt_strncpy(object->name, name, RT_NAME_MAX);
 
     RT_OBJECT_HOOK_CALL(rt_object_attach_hook, (object));
 

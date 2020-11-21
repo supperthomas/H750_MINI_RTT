@@ -135,7 +135,7 @@ static rt_err_t _rt_thread_init(struct rt_thread *thread,
     thread->stack_size = stack_size;
 
     /* init thread stack */
-    rt_memset(thread->stack_addr, '#', thread->stack_size);
+    //rt_memset(thread->stack_addr, '#', thread->stack_size);
 #ifdef ARCH_CPU_STACK_GROWS_UPWARD
     thread->sp = (void *)rt_hw_stack_init(thread->entry, thread->parameter,
                                           (void *)((char *)thread->stack_addr),
