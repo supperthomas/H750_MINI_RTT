@@ -84,7 +84,7 @@ extern struct rt_semaphore dynamic_sem;
 void SysTick_Handler(void)
 {
     /* enter interrupt */
-    rt_interrupt_enter();
+   //rt_interrupt_enter();
     count++;
     if(count >= RT_TICK_PER_SECOND)
     {
@@ -94,5 +94,5 @@ void SysTick_Handler(void)
     rt_tick_increase();
 
     /* leave interrupt */
-    rt_interrupt_leave();
+   // rt_interrupt_leave();
 }

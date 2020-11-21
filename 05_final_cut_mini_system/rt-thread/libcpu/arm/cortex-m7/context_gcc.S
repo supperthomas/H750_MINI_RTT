@@ -31,21 +31,7 @@
 /*
  * rt_base_t rt_hw_interrupt_disable();
  */
-.global rt_hw_interrupt_disable
-.type rt_hw_interrupt_disable, %function
-rt_hw_interrupt_disable:
-    MRS     r0, PRIMASK
-    CPSID   I
-    BX      LR
 
-/*
- * void rt_hw_interrupt_enable(rt_base_t level);
- */
-.global rt_hw_interrupt_enable
-.type rt_hw_interrupt_enable, %function
-rt_hw_interrupt_enable:
-    MSR     PRIMASK, r0
-    BX      LR
 
 /*
  * void rt_hw_context_switch(rt_uint32 from, rt_uint32 to);

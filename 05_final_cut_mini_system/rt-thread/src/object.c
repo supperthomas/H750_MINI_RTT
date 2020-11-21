@@ -276,7 +276,7 @@ void rt_object_init(struct rt_object         *object,
     RT_OBJECT_HOOK_CALL(rt_object_attach_hook, (object));
 
     /* lock interrupt */
-    temp = rt_hw_interrupt_disable();
+  //  temp = rt_hw_interrupt_disable();
 
 #ifdef RT_USING_MODULE
     if (module)
@@ -292,7 +292,7 @@ void rt_object_init(struct rt_object         *object,
     }
 
     /* unlock interrupt */
-    rt_hw_interrupt_enable(temp);
+   // rt_hw_interrupt_enable(temp);
 }
 
 /**

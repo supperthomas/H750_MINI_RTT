@@ -32,7 +32,7 @@
 #if defined (RT_USING_IDLE_HOOK) || defined(RT_USING_HEAP)
 #define IDLE_THREAD_STACK_SIZE  256
 #else
-#define IDLE_THREAD_STACK_SIZE  128
+#define IDLE_THREAD_STACK_SIZE  64
 #endif
 #endif
 

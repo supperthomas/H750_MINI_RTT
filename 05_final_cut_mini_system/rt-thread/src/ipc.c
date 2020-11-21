@@ -331,7 +331,7 @@ rt_err_t rt_sem_take(rt_sem_t sem, rt_int32_t time)
     RT_OBJECT_HOOK_CALL(rt_object_trytake_hook, (&(sem->parent.parent)));
 
     /* disable interrupt */
-    temp = rt_hw_interrupt_disable();
+  //  temp = rt_hw_interrupt_disable();
 
     RT_DEBUG_LOG(RT_DEBUG_IPC, ("thread %s take sem:%s, which value is: %d\n",
                                 rt_thread_self()->name,
@@ -344,14 +344,14 @@ rt_err_t rt_sem_take(rt_sem_t sem, rt_int32_t time)
         sem->value --;
 
         /* enable interrupt */
-        rt_hw_interrupt_enable(temp);
+       // rt_hw_interrupt_enable(temp);
     }
     else
     {
         /* no waiting, return with timeout */
         if (time == 0)
         {
-            rt_hw_interrupt_enable(temp);
+         //   rt_hw_interrupt_enable(temp);
 
             return -RT_ETIMEOUT;
         }
@@ -389,7 +389,7 @@ rt_err_t rt_sem_take(rt_sem_t sem, rt_int32_t time)
 //            }
 
             /* enable interrupt */
-            rt_hw_interrupt_enable(temp);
+       //     rt_hw_interrupt_enable(temp);
 
             /* do schedule */
             rt_schedule();
@@ -442,7 +442,7 @@ rt_err_t rt_sem_release(rt_sem_t sem)
     need_schedule = RT_FALSE;
 
     /* disable interrupt */
-    temp = rt_hw_interrupt_disable();
+  //  temp = rt_hw_interrupt_disable();
 
     RT_DEBUG_LOG(RT_DEBUG_IPC, ("thread %s releases sem:%s, which value is: %d\n",
                                 rt_thread_self()->name,
@@ -459,7 +459,7 @@ rt_err_t rt_sem_release(rt_sem_t sem)
         sem->value ++; /* increase value */
 
     /* enable interrupt */
-    rt_hw_interrupt_enable(temp);
+  //  rt_hw_interrupt_enable(temp);
 
     /* resume a thread, re-schedule */
     if (need_schedule == RT_TRUE)

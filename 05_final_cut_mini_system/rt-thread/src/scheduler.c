@@ -193,7 +193,7 @@ void rt_schedule(void)
     struct rt_thread *from_thread;
 
     /* disable interrupt */
-    level = rt_hw_interrupt_disable();
+   // level = rt_hw_interrupt_disable();
 
     /* check the scheduler is enabled or not */
     if (rt_scheduler_lock_nest == 0)
@@ -257,7 +257,7 @@ void rt_schedule(void)
 #endif
                 {
                     /* enable interrupt */
-                    rt_hw_interrupt_enable(level);
+              //      rt_hw_interrupt_enable(level);
                 }
 
                 return ;
@@ -273,7 +273,7 @@ void rt_schedule(void)
     }
 
     /* enable interrupt */
-    rt_hw_interrupt_enable(level);
+   // rt_hw_interrupt_enable(level);
 }
 
 /*
@@ -290,7 +290,7 @@ void rt_schedule_insert_thread(struct rt_thread *thread)
     RT_ASSERT(thread != RT_NULL);
 
     /* disable interrupt */
-    temp = rt_hw_interrupt_disable();
+    //temp = rt_hw_interrupt_disable();
 
     /* change stat */
     thread->stat = RT_THREAD_READY | (thread->stat & ~RT_THREAD_STAT_MASK);
@@ -319,7 +319,7 @@ void rt_schedule_insert_thread(struct rt_thread *thread)
     rt_thread_ready_priority_group |= thread->number_mask;
 
     /* enable interrupt */
-    rt_hw_interrupt_enable(temp);
+ //   rt_hw_interrupt_enable(temp);
 }
 
 /*
@@ -336,7 +336,7 @@ void rt_schedule_remove_thread(struct rt_thread *thread)
     RT_ASSERT(thread != RT_NULL);
 
     /* disable interrupt */
-    temp = rt_hw_interrupt_disable();
+  //  temp = rt_hw_interrupt_disable();
 
 #if RT_THREAD_PRIORITY_MAX <= 32
     RT_DEBUG_LOG(RT_DEBUG_SCHEDULER, ("remove thread[%.*s], the priority: %d\n",
@@ -368,7 +368,7 @@ void rt_schedule_remove_thread(struct rt_thread *thread)
     }
 
     /* enable interrupt */
-    rt_hw_interrupt_enable(temp);
+ //   rt_hw_interrupt_enable(temp);
 }
 
 /**

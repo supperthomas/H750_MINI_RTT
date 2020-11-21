@@ -452,7 +452,7 @@ rt_err_t rt_thread_yield(void)
     struct rt_thread *thread;
 
     /* disable interrupt */
-    level = rt_hw_interrupt_disable();
+   // level = rt_hw_interrupt_disable();
 
     /* set to current thread */
     thread = rt_current_thread;
@@ -469,7 +469,7 @@ rt_err_t rt_thread_yield(void)
                               &(thread->tlist));
 
         /* enable interrupt */
-        rt_hw_interrupt_enable(level);
+      //  rt_hw_interrupt_enable(level);
 
         rt_schedule();
 
@@ -477,7 +477,7 @@ rt_err_t rt_thread_yield(void)
     }
 
     /* enable interrupt */
-    rt_hw_interrupt_enable(level);
+   // rt_hw_interrupt_enable(level);
 
     return RT_EOK;
 }
@@ -661,7 +661,7 @@ rt_err_t rt_thread_suspend(rt_thread_t thread)
     }
 
     /* disable interrupt */
-    temp = rt_hw_interrupt_disable();
+//    temp = rt_hw_interrupt_disable();
 
     /* change thread stat */
     thread->stat = RT_THREAD_SUSPEND | (thread->stat & ~RT_THREAD_STAT_MASK);
@@ -671,7 +671,7 @@ rt_err_t rt_thread_suspend(rt_thread_t thread)
    // rt_timer_stop(&(thread->thread_timer));
 
     /* enable interrupt */
-    rt_hw_interrupt_enable(temp);
+   // rt_hw_interrupt_enable(temp);
 
     RT_OBJECT_HOOK_CALL(rt_thread_suspend_hook, (thread));
     return RT_EOK;
@@ -704,7 +704,7 @@ rt_err_t rt_thread_resume(rt_thread_t thread)
     }
 
     /* disable interrupt */
-    temp = rt_hw_interrupt_disable();
+   // temp = rt_hw_interrupt_disable();
 
     /* remove from suspend list */
     rt_list_remove(&(thread->tlist));
@@ -712,7 +712,7 @@ rt_err_t rt_thread_resume(rt_thread_t thread)
   //  rt_timer_stop(&thread->thread_timer);
 
     /* enable interrupt */
-    rt_hw_interrupt_enable(temp);
+   // rt_hw_interrupt_enable(temp);
 
     /* insert to schedule ready list */
     rt_schedule_insert_thread(thread);
