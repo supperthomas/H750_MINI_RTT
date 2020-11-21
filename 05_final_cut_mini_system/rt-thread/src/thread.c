@@ -78,42 +78,42 @@ void rt_thread_inited_sethook(void (*hook)(rt_thread_t thread))
 
 #endif
 
-void rt_thread_exit(void)
-{
-    struct rt_thread *thread;
-    register rt_base_t level;
-
-    /* get current thread */
-    thread = rt_current_thread;
-
-    /* disable interrupt */
-    level = rt_hw_interrupt_disable();
-
-    /* remove from schedule */
-    rt_schedule_remove_thread(thread);
-    /* change stat */
-    thread->stat = RT_THREAD_CLOSE;
-
-    /* remove it from timer list */
-   // rt_timer_detach(&thread->thread_timer);
-
-    if ((rt_object_is_systemobject((rt_object_t)thread) == RT_TRUE) &&
-        thread->cleanup == RT_NULL)
-    {
-        rt_object_detach((rt_object_t)thread);
-    }
-    else
-    {
-        /* insert to defunct thread list */
-        rt_list_insert_after(&rt_thread_defunct, &(thread->tlist));
-    }
-
-    /* enable interrupt */
-    rt_hw_interrupt_enable(level);
-
-    /* switch to next task */
-    rt_schedule();
-}
+//void rt_thread_exit(void)
+//{
+//    struct rt_thread *thread;
+//    register rt_base_t level;
+//
+//    /* get current thread */
+//    thread = rt_current_thread;
+//
+//    /* disable interrupt */
+//    level = rt_hw_interrupt_disable();
+//
+//    /* remove from schedule */
+//    rt_schedule_remove_thread(thread);
+//    /* change stat */
+//    thread->stat = RT_THREAD_CLOSE;
+//
+//    /* remove it from timer list */
+//   // rt_timer_detach(&thread->thread_timer);
+//
+//    if ((rt_object_is_systemobject((rt_object_t)thread) == RT_TRUE) &&
+//        thread->cleanup == RT_NULL)
+//    {
+//        rt_object_detach((rt_object_t)thread);
+//    }
+//    else
+//    {
+//        /* insert to defunct thread list */
+//        rt_list_insert_after(&rt_thread_defunct, &(thread->tlist));
+//    }
+//
+//    /* enable interrupt */
+//    rt_hw_interrupt_enable(level);
+//
+//    /* switch to next task */
+//    rt_schedule();
+//}
 
 static rt_err_t _rt_thread_init(struct rt_thread *thread,
                                 const char       *name,
@@ -143,7 +143,7 @@ static rt_err_t _rt_thread_init(struct rt_thread *thread,
 #else
     thread->sp = (void *)rt_hw_stack_init(thread->entry, thread->parameter,
                                           (void *)((char *)thread->stack_addr + thread->stack_size - 4),
-                                          (void *)rt_thread_exit);
+                                          (void *)RT_NULL);
 #endif
 
     /* priority init */
