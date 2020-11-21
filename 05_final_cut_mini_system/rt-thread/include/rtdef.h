@@ -553,16 +553,16 @@ struct rt_thread
     rt_ubase_t  init_tick;                              /**< thread's initialized tick */
     rt_ubase_t  remaining_tick;                         /**< remaining tick */
 
-    struct rt_timer thread_timer;                       /**< built-in thread timer */
+    //struct rt_timer thread_timer;                       /**< built-in thread timer */
 
-    void (*cleanup)(struct rt_thread *tid);             /**< cleanup function when thread exit */
+ //   void (*cleanup)(struct rt_thread *tid);             /**< cleanup function when thread exit */
 
     /* light weight process if present */
 #ifdef RT_USING_LWP
     void        *lwp;
 #endif
 
-    rt_uint32_t user_data;                             /**< private user data beyond this thread */
+   // rt_uint32_t user_data;                             /**< private user data beyond this thread */
 };
 typedef struct rt_thread *rt_thread_t;
 

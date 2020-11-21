@@ -166,8 +166,8 @@ static rt_err_t _rt_thread_init(struct rt_thread *thread,
     thread->stat  = RT_THREAD_INIT;
 
     /* initialize cleanup function and user data */
-    thread->cleanup   = 0;
-    thread->user_data = 0;
+   // thread->cleanup   = 0;
+   // thread->user_data = 0;
 
     /* init thread timer */
 //    rt_timer_init(&(thread->thread_timer),
@@ -321,13 +321,12 @@ rt_err_t rt_thread_detach(rt_thread_t thread)
     }
 
     /* release thread timer */
-    rt_timer_detach(&(thread->thread_timer));
+  //  rt_timer_detach(&(thread->thread_timer));
 
     /* change stat */
     thread->stat = RT_THREAD_CLOSE;
 
-    if ((rt_object_is_systemobject((rt_object_t)thread) == RT_TRUE) &&
-        thread->cleanup == RT_NULL)
+    if ((rt_object_is_systemobject((rt_object_t)thread) == RT_TRUE) )
     {
         rt_object_detach((rt_object_t)thread);
     }
@@ -506,8 +505,8 @@ rt_err_t rt_thread_sleep(rt_tick_t tick)
     rt_thread_suspend(thread);
 
     /* reset the timeout of thread timer and start it */
-    rt_timer_control(&(thread->thread_timer), RT_TIMER_CTRL_SET_TIME, &tick);
-    rt_timer_start(&(thread->thread_timer));
+    //rt_timer_control(&(thread->thread_timer), RT_TIMER_CTRL_SET_TIME, &tick);
+   // rt_timer_start(&(thread->thread_timer));
 
     /* enable interrupt */
     rt_hw_interrupt_enable(temp);

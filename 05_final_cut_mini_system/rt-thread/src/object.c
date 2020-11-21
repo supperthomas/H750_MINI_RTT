@@ -301,27 +301,27 @@ void rt_object_init(struct rt_object         *object,
  *
  * @param object the specified object to be detached.
  */
-void rt_object_detach(rt_object_t object)
-{
-    register rt_base_t temp;
-
-    /* object check */
-    RT_ASSERT(object != RT_NULL);
-
-    RT_OBJECT_HOOK_CALL(rt_object_detach_hook, (object));
-
-    /* reset object type */
-    object->type = 0;
-
-    /* lock interrupt */
-    temp = rt_hw_interrupt_disable();
-
-    /* remove from old list */
-    rt_list_remove(&(object->list));
-
-    /* unlock interrupt */
-    rt_hw_interrupt_enable(temp);
-}
+//void rt_object_detach(rt_object_t object)
+//{
+//    register rt_base_t temp;
+//
+//    /* object check */
+//    RT_ASSERT(object != RT_NULL);
+//
+//    RT_OBJECT_HOOK_CALL(rt_object_detach_hook, (object));
+//
+//    /* reset object type */
+//    object->type = 0;
+//
+//    /* lock interrupt */
+//    temp = rt_hw_interrupt_disable();
+//
+//    /* remove from old list */
+//    rt_list_remove(&(object->list));
+//
+//    /* unlock interrupt */
+//    rt_hw_interrupt_enable(temp);
+//}
 
 #ifdef RT_USING_HEAP
 /**
