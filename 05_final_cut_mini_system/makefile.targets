@@ -3,4 +3,4 @@ clean2:
 	-$(RM) $(OBJS) *.elf
 	-@echo ' '
     
-*.elf: $(wildcard F:/04_git_repo/github_mini_rtthread/04_nostdlib_mini_rtthread/linkscripts/STM32H750VBTx/link.lds)
+*.elf: $(wildcard F:/04_git_repo/github_mini_rtthread/05_final_cut_mini_system/linkscripts/STM32H750VBTx/link.lds)
