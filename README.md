@@ -282,7 +282,7 @@ Program Size: Code=10394 RO-data=1450 RW-data=72 ZI-data=1944
 
 优化界面中，选中-Os之后
 
-代码差不多缩减了一半
+代码差不多缩减了一半 差不多是5.8KB
 
 ![image-20201121215628120](images/image-20201121215628120.png)
 
@@ -292,7 +292,7 @@ Program Size: Code=10394 RO-data=1450 RW-data=72 ZI-data=1944
 
 -fdata-sections 编译源文件时，为每个data分配独立的section。
 
-在优化界面选中--ffunction-secionts
+在优化界面选中--ffunction-secionts， 差不多是2.0KB
 
 ![image-20201121215809380](images/image-20201121215809380.png)
 
