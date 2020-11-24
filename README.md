@@ -234,7 +234,7 @@ void SysTick_Handler(void)
 
 这边我通过用keil直接添加RTOS pack包的方式然后直接生成可以使用的工程即可
 
-![KEIL_ADD_RTT](C:/Users/thomas/Desktop/KEIL_ADD_RTT.gif)
+![KEIL_ADD_RTT](images/KEIL_ADD_RTT.gif)
 
 这个时候，我们看到工程已经很小了，这个工程在02_led_rtthread_mini_system_keil：
 
