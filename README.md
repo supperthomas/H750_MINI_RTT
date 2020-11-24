@@ -306,7 +306,7 @@ Program Size: Code=10394 RO-data=1450 RW-data=72 ZI-data=1944
 
 ![image-20201121220120681](images/image-20201121220120681.png)
 
-优化下来大小差不多是：
+优化下来大小差不多是, 裁剪了1.3KB：
 
 ![image-20201121220208688](images/image-20201121220208688.png)
 
