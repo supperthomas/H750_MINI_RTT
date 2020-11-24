@@ -601,7 +601,7 @@ https://github.com/supperthomas/H750_MINI_RTT.git
 
 ​        我在github上面建了个仓库，放了我最后的代码，以及一些commit的内容，和一步步裁剪的流程。我知道很多人都参加了比赛，可能你有些比较好的裁剪方案，可以PR到我这个仓库里来，我们一起来维护，如果您觉得还有裁剪空间，您可以继续PR来裁剪下去，一直裁剪到最小rtthread。
 
-https://gitee.com/superThomas/h750_-mini_-system.git
+[github](https://github.com/supperthomas/H750_MINI_RTT.git)
 
 ## 给小伙伴的建议
 
